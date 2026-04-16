@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>災害情資網 - 系統操作導覽</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e9ecef;
+            margin: 0;
+        }
+        .gallery-wrapper {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 1000px;
+            width: 95%;
+        }
+        .main-image {
+            width: 100%;
+            height: auto;
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        .nav-btn {
+            padding: 10px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #0056b3;
+            color: #ffffff;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover:not(:disabled) {
+            background-color: #003d82;
+        }
+        .nav-btn:disabled {
+            background-color: #ced4da;
+            cursor: not-allowed;
+        }
+        .status-text {
+            font-size: 15px;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+<div class="gallery-wrapper">
+    <img id="display-img" class="main-image" src="images/原始畫面.jpg" alt="操作導覽畫面">
+    
+    <div class="button-group">
+        <button id="btn-prev" class="nav-btn" onclick="switchImage(-1)" disabled>上一頁</button>
+        <button id="btn-next" class="nav-btn" onclick="switchImage(1)">下一頁</button>
+    </div>
+    
+    <div class="status-text" id="page-status">1 / 5</div>
+</div>
+
+<script>
+    const imageList = [
+        "images/原始畫面.jpg",
+        "images/圖層控制_1.jpg",
+        "images/圖層控制_2.jpg",
+        "images/圖層控制_3.jpg",
+        "images/圖層控制_4.jpg"
+    ];
+    
+    let currentIndex = 0;
+
+    const displayImg = document.getElementById("display-img");
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
+    const pageStatus = document.getElementById("page-status");
+
+    function refreshView() {
+        displayImg.src = imageList[currentIndex];
+        pageStatus.innerText = (currentIndex + 1) + " / " + imageList.length;
+        
+        btnPrev.disabled = currentIndex === 0;
+        btnNext.disabled = currentIndex === (imageList.length - 1);
+    }
+
+    function switchImage(direction) {
+        currentIndex += direction;
+        
+        if (currentIndex < 0) {
+            currentIndex = 0;
+        } else if (currentIndex >= imageList.length) {
+            currentIndex = imageList.length - 1;
+        }
+        
+        refreshView();
+    }
+</script>
+
+</body>
+</html>
